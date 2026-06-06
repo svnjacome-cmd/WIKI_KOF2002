@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>KOF 2002 Wiki — Select Fighter</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  body, html {
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+  }
+</style>
+</head>
+<body>
+
+<!-- PANTALLA DE INTRO CON VIDEO -->
+<div id="introScreen">
+  <video id="introVideo" playsinline>
+    <source src="YTDown_YouTube_The-King-of-Fighters-2002-Intro-Opening-_Media_lEv31wa9TVo_001_720p.mp4" type="video/mp4">
+    GABRIELA REGRESA MI AMORRRR
+  </video>
+  <button id="skipBtn" class="skip-button">S</button>
+</div>
+
+<button id="admbtn" onclick="toggleAdmin()">⚙</button>
+<button id="musicControl" onclick="toggleMusic()">🔊</button>
+
+<audio id="bgMusic" loop preload="auto">
+  <source src="select-player-select.mp3" type="audio/mpeg">
+</audio>
+
+<!-- SONIDO PARA HOVER - USA TU ARCHIVO common_00060.mp3 -->
+<audio id="hoverSound" preload="auto">
+  <source src="SONDIOJAJA.mp3" type="audio/mpeg">
+</audio>
+
+<div id="admPanel">
+  <h2>■ WIKI ADMIN ■</h2>
+  <div id="adminStatus"></div>
+  
+  <div class="admin-section">
+    <div class="admin-title">📋 SELECCIONAR PERSONAJE</div>
+    <select id="charSelect" size="6" onchange="loadToAdmin()"></select>
+  </div>
+  
+  <div class="admin-section">
+    <div class="admin-title">✏️ EDITAR PERSONAJE</div>
+    <label>ID</label><input id="editId" type="text" placeholder="kyo">
+    <label>NOMBRE</label><input id="editName" type="text" placeholder="Kyo Kusanagi">
+    
+    <label>MINIATURA</label>
+    <input id="editThumb" type="text" placeholder="URL de imagen">
+    <div class="url-actions">
+      <button onclick="testImageUrl('thumb')">🔍 Probar URL</button>
+      <button onclick="clearImage('thumb')">🗑️ Limpiar</button>
+    </div>
+    <div class="preview-area" id="thumbPreview"></div>
+    <input type="file" id="thumbFile" class="file-input" accept="image/*" onchange="uploadImageFile(this, 'thumb')">
+    
+    <label>RETRATO</label>
+    <input id="editPortrait" type="text" placeholder="URL de imagen">
+    <div class="url-actions">
+      <button onclick="testImageUrl('portrait')">🔍 Probar URL</button>
+      <button onclick="clearImage('portrait')">🗑️ Limpiar</button>
+    </div>
+    <div class="preview-area" id="portraitPreview"></div>
+    <input type="file" id="portraitFile" class="file-input" accept="image/*" onchange="uploadImageFile(this, 'portrait')">
+    
+    <label>DESCRIPCIÓN</label><textarea id="editDesc"></textarea>
+    <label>EQUIPO</label><input id="editTeam" type="text">
+    <label>NACIONALIDAD</label><input id="editNation" type="text">
+    <label>PRIMERA APARICIÓN</label><input id="editFirst" type="text">
+    <label>ESTILO</label><input id="editStyle" type="text">
+    <label>URL PÁGINA</label><input id="editPage" type="text" placeholder="personajes/kyo.html">
+    <button id="saveBtn" onclick="saveCharacter()">💾 GUARDAR CAMBIOS</button>
+  </div>
+  
+  <div class="admin-section">
+    <div class="admin-title">🛠️ HERRAMIENTAS</div>
+    <button onclick="exportData()">📤 EXPORTAR JSON</button>
+    <button onclick="importData()">📥 IMPORTAR JSON</button>
+    <button onclick="resetData()" style="border-color:#882222;color:#ff6666;">⚠️ RESET DEFAULT</button>
+  </div>
+  
+  <div class="storage-info" id="storageInfo"></div>
+</div>
+
+<div id="screen">
+  <div id="left">
+    <div id="pbox1" class="pbox">
+      <div class="pph" id="ph1"><div class="pph-sil">?</div></div>
+      <img class="pimg" id="img1" src="" alt="">
+      <div class="pbadge">SELECT</div>
+      <div class="info-panel" id="info1">
+        <div class="info-charname" id="infoName">——</div>
+        <div class="info-row"><span class="info-lbl">EQUIPO</span><span class="info-val" id="infoTeam">—</span></div>
+        <div class="info-row"><span class="info-lbl">NACIÓN</span><span class="info-val" id="infoNation">—</span></div>
+        <div class="info-row"><span class="info-lbl">1ª APARI.</span><span class="info-val" id="infoFirst">—</span></div>
+        <div class="info-row"><span class="info-lbl">ESTILO</span><span class="info-val" id="infoStyle">—</span></div>
+        <div class="info-desc" id="infoDesc"></div>
+        <div class="info-cta">► CLICK PARA VER FICHA ◄</div>
+      </div>
+      <div class="pnamebar" id="nb1"><div class="pcharname">SELECCIONA UN PERSONAJE</div></div>
+    </div>
+    <div id="timer">
+      <div id="tlbl">TIME</div>
+      <div id="tval">30</div>
+    </div>
+  </div>
+  <div id="vsep"></div>
+  <div id="right">
+    <div id="cursor"></div>
+    <div id="grid-container">
+      <div id="grid"></div>
+    </div>
+    <div id="statusbar">
+      <span class="sbt">KOF 2002 WIKI</span>
+      <span id="sbmid">SELECCIONA UN PERSONAJE</span>
+      <span class="sbt" id="charCount">36 PERSONAJES</span>
+    </div>
+  </div>
+</div>
+
+<script src="data.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
